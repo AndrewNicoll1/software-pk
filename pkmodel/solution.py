@@ -45,7 +45,7 @@ class Solution:
             ) 
         self.sol = sol
 
-    def plot(self, show=True, ax=None):
+    def plot(self, ax=None):
         '''plot the results for both q_c and q_p1 over time'''
 
         try:
@@ -53,7 +53,7 @@ class Solution:
         except:
             raise AttributeError('Run `.solve` method first')
 
-        if show:  # create a Matplotlib figure for plotting.
+        if ax is None:  # create a Matplotlib figure for plotting.
             fig = plt.figure()
             ax = plt
 
@@ -61,7 +61,7 @@ class Solution:
         ax.plot(sol.t, sol.y[1, :], label=self.model.name + '- q_p1')
         
         # Add labels, legends, and axis labels to the plot.
-        if show:
+        if ax == plt:
             ax.legend()
             ax.ylabel('drug mass [ng]')
             ax.xlabel('time [h]')
