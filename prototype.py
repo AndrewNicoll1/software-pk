@@ -10,6 +10,7 @@ import matplotlib.pylab as plt
 import numpy as np
 import scipy.integrate
 
+
 # define a function dose(t, X) that represents the drug dose as a function of time. 
 # It's a simple function that returns a constant dose X at any given time t.
 def dose(t, X):
