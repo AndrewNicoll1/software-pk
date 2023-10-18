@@ -1,6 +1,10 @@
 #
 # Solution class
 #
+import pkmodel as pk
+import numpy as np
+import scipy.integrate
+import matplotlib.pyplot as plt
 
 class Solution:
     """A Pharmokinetic (PK) model solver
@@ -18,9 +22,6 @@ class Solution:
         Two initial conditions for q_c and q_p1, 
         defaults to [0,0]
     """
-    import pkmodel as pk
-    import numpy as np
-    import scipy.integrate
 
     def __init__(self, model, T=1., n=1000, y0=None):
         assert type(model)==pk.Model, "model is not a PK model type"
@@ -44,19 +45,26 @@ class Solution:
             ) 
         self.sol = sol
 
-    def plot(self, show=True):
+    def plot(self, show=True, ax=None):
         '''plot the results for both q_c and q_p1 over time'''
-        # create a Matplotlib figure for plotting.
-        fig = plt.figure()
 
-        sol = self.sol
-        plt.plot(sol.t, sol.y[0, :], label=self.model.name + '- q_c')
-        plt.plot(sol.t, sol.y[1, :], label=self.model.name + '- q_p1')
+        try:
+            sol = self.sol  # Ensure .solve has been run
+        except:
+            raise AttributeError('Run `.solve` method first')
+
+        if show:  # create a Matplotlib figure for plotting.
+            fig = plt.figure()
+            ax = plt
+
+        ax.plot(sol.t, sol.y[0, :], label=self.model.name + '- q_c')
+        ax.plot(sol.t, sol.y[1, :], label=self.model.name + '- q_p1')
+        
         # Add labels, legends, and axis labels to the plot.
-        plt.legend()
-        plt.ylabel('drug mass [ng]')
-        plt.xlabel('time [h]')
         if show:
+            ax.legend()
+            ax.ylabel('drug mass [ng]')
+            ax.xlabel('time [h]')
             plt.show()
 
 
