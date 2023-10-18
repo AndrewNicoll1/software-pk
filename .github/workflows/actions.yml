@@ -1,0 +1,14 @@
+name: software-pk GitHub Actions Workflow
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  basic-job:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name:
+      run: 
