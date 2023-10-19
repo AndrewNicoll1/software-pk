@@ -1,6 +1,6 @@
 import pkmodel as pk
 
-model = pk.Model()
+model = pk.ThreeCellModel()
 sol = pk.Solution(model)
 model.name = 'Test Model '
 sol.solve()

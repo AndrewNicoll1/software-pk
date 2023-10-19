@@ -24,7 +24,7 @@ class Solution:
     """
 
     def __init__(self, model, T=1., n=1000, y0=None):
-        assert type(model)==pk.Model, "model is not a PK model type"
+        assert issubclass(type(model), pk.BaseModel), "model is not a PK model type"
         self.model = model
 
         # time array t_eval to evaluate the model over a range of time points.
@@ -33,7 +33,7 @@ class Solution:
 
         #initialize the initial conditions for the state variables in y0.
         if y0 is None:
-            y0 = np.array([0.0, 0.0])
+            y0 = np.zeros(len(model), dtype=np.float64)
         self.y0 = y0
 
     def solve(self):
@@ -56,10 +56,13 @@ class Solution:
         if ax is None:  # create a Matplotlib figure for plotting.
             fig = plt.figure()
             ax = plt
-
         ax.plot(sol.t, sol.y[0, :], label=self.model.name + '- q_c')
-        ax.plot(sol.t, sol.y[1, :], label=self.model.name + '- q_p1')
-        
+        if len(self.model) == 2:
+            ax.plot(sol.t, sol.y[1, :], label=self.model.name + '- q_p1')
+        elif len(self.model) == 3:
+            ax.plot(sol.t, sol.y[1, :], label=self.model.name + '- q_p0')
+            ax.plot(sol.t, sol.y[2, :], label=self.model.name + '- q_p1')
+
         # Add labels, legends, and axis labels to the plot.
         if ax == plt:
             ax.legend()
