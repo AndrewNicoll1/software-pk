@@ -69,6 +69,20 @@ class Solution:
             ax.ylabel('drug mass [ng]')
             ax.xlabel('time [h]')
             plt.show()
+    
+    def plotDose(self, ax=None):
+        if ax is None:  # create a Matplotlib figure for plotting.
+            fig = plt.figure()
+            ax = plt
+        ax.plot(self.t_eval, self.model.dose(self.t_eval), label=self.model.name + 'dosing')
+
+        # Add labels, legends, and axis labels to the plot.
+        if ax == plt:
+            ax.legend()
+            ax.ylabel('drug mass [ng]')
+            ax.xlabel('time [h]')
+            plt.show()
+
 
 
 

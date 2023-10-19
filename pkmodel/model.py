@@ -1,7 +1,7 @@
 #
 # Model class
 #
-
+import pkmodel.dosing
 class BaseModel:
     """A Pharmokinetic (PK) model
 
@@ -36,7 +36,7 @@ class BaseModel:
             def dose(t):
                 '''Define a function dose(t) that represents the drug dose as a function of time. 
                 It's a simple function that returns a constant dose X at any given time t.'''
-                return model_args['X']
+                return pkmodel.dosing.constant(model_args['X'])(t)
         
         self.model_args = model_args
         self.__dict__.update(model_args)  # Saves all params
