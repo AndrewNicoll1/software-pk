@@ -17,4 +17,5 @@ for i, dose in enumerate(doses):
     sol.plot(axs.T[i])
 
 fig.tight_layout()
+fig.savefig('example')
 plt.show()
