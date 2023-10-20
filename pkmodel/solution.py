@@ -19,7 +19,7 @@ class Solution:
     n: int, optional
         Number of timesteps, defaults to 1000
     y0: np.array (float), optional
-        Two initial conditions for q_c and q_p1, 
+        Two initial conditions for q_c and q_p1,
         defaults to [0,0]
     """
 
@@ -46,7 +46,7 @@ class Solution:
             fun=lambda t, y: self.model.rhs(t, y),
             t_span=[self.t_eval[0], self.t_eval[-1]],
             y0=self.y0, t_eval=self.t_eval
-            ) 
+            )
         self.sol = sol
 
     def plotResults(self, ax=None):
@@ -73,7 +73,7 @@ class Solution:
             ax.ylabel('drug mass [ng]')
             ax.xlabel('time [h]')
             plt.show()
-    
+
     def plotDose(self, ax=None):
         if ax is None:  # create a Matplotlib figure for plotting.
             fig = plt.figure()
@@ -87,7 +87,7 @@ class Solution:
             ax.ylabel('drug mass [ng]')
             ax.xlabel('time [h]')
             plt.show()
-    
+
     def plot(self, axs=None):
         if axs is None:
             fig, axs = plt.subplots(2, 1, sharex=True)
@@ -105,16 +105,3 @@ class Solution:
 
         if show:
             plt.show()
-
-
-
-
-
-
-
-
-
-
-
-
-

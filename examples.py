@@ -16,7 +16,6 @@ for model_type in models:
         model = model_type(dose=dose)
         sol = pk.Solution(model)
         sol.solve()
-
         sol.plot(axs.T[i])
 
     fig.tight_layout()

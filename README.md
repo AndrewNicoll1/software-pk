@@ -9,4 +9,7 @@ This Python library uses simple 2- and 3-compartment pharmacokinetic models.
 2-compartment model:
 
 ![Example two cell results](example%20Two%20cell%20model.png)
+
+3-compartment model:
+
 ![Example three cell results](example%20Three%20cell%20model.png)
