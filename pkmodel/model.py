@@ -21,7 +21,7 @@ class BaseModel:
         
         if model_args is None:
             model_args = {
-                'name': 'model1',
+                'name': 'model',
                 'Q_p1': 1.,
                 'V_c': 1.,
                 'V_p1': 1.,
@@ -46,6 +46,9 @@ class BaseModel:
     def __len__(self):
         return self.dim
 
+    def __str__(self):
+        return self.name
+
 class TwoCellModel(BaseModel):
     def __init__(self, model_args=None, dose=None):
         super(TwoCellModel, self).__init__(model_args, dose)
@@ -61,6 +64,11 @@ class TwoCellModel(BaseModel):
         
         self.rhs = rhs 
         self.dim = 2
+
+        if self.name == 'model':
+            self.name = "Two cell model"
+
+
 
 Model = TwoCellModel
 
@@ -88,3 +96,5 @@ class ThreeCellModel(BaseModel):
         self.rhs = rhs 
         self.dim = 3
 
+        if self.name == 'model':
+            self.name = "Three cell model"

@@ -60,12 +60,12 @@ class Solution:
         if ax is None:  # create a Matplotlib figure for plotting.
             fig = plt.figure()
             ax = plt
-        ax.plot(sol.t, sol.y[0, :], label=self.model.name + 'q_c')
+        ax.plot(sol.t, sol.y[0, :], label='q_c')
         if len(self.model) == 2:
-            ax.plot(sol.t, sol.y[1, :], label=self.model.name + 'q_p1')
+            ax.plot(sol.t, sol.y[1, :], label='q_p1')
         elif len(self.model) == 3:
-            ax.plot(sol.t, sol.y[1, :], label=self.model.name + 'q_p0')
-            ax.plot(sol.t, sol.y[2, :], label=self.model.name + 'q_p1')
+            ax.plot(sol.t, sol.y[1, :], label='q_p0')
+            ax.plot(sol.t, sol.y[2, :], label='q_p1')
 
         # Add labels, legends, and axis labels to the plot.
         if ax == plt:
@@ -79,7 +79,7 @@ class Solution:
             fig = plt.figure()
             ax = plt
         ax.plot(self.t_eval, self.model.dose(self.t_eval),
-                label=self.model.name + f'dosing (total = {self.total_dose}ng)')
+                label=f'dosing (total = {self.total_dose}ng)')
 
         # Add labels, legends, and axis labels to the plot.
         if ax == plt:
