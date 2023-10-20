@@ -9,9 +9,9 @@ def constant(X):
 def pulse(X, t0, dt):
     # Dosing at constant intervals dt apart 
     # for t0 seconds of strength X
-    return lambda t: X*t * (t0<=t%dt)
+    return lambda t: X * (t0<=t%dt)
 
 def sawtooth(X, dt):
     # Dosing at constant intervals dt apart 
     # of strength 0 - X
-    return lambda t: X*t * t%dt
+    return lambda t: X * (t%dt)/dt

@@ -36,6 +36,10 @@ class Solution:
             y0 = np.zeros(len(model), dtype=np.float64)
         self.y0 = y0
 
+        # Calculate total dosing
+        total_dose = scipy.integrate.quad(self.model.dose, 0, T)
+        self.total_dose = np.round(total_dose[0], 3)
+
     def solve(self):
         '''Solve the pharmacokinetic model using scipy.integrate.solve_ivp'''
         sol = scipy.integrate.solve_ivp(
@@ -45,7 +49,7 @@ class Solution:
             ) 
         self.sol = sol
 
-    def plot(self, ax=None):
+    def plotResults(self, ax=None):
         '''plot the results for both q_c and q_p1 over time'''
 
         try:
@@ -56,12 +60,12 @@ class Solution:
         if ax is None:  # create a Matplotlib figure for plotting.
             fig = plt.figure()
             ax = plt
-        ax.plot(sol.t, sol.y[0, :], label=self.model.name + '- q_c')
+        ax.plot(sol.t, sol.y[0, :], label=self.model.name + 'q_c')
         if len(self.model) == 2:
-            ax.plot(sol.t, sol.y[1, :], label=self.model.name + '- q_p1')
+            ax.plot(sol.t, sol.y[1, :], label=self.model.name + 'q_p1')
         elif len(self.model) == 3:
-            ax.plot(sol.t, sol.y[1, :], label=self.model.name + '- q_p0')
-            ax.plot(sol.t, sol.y[2, :], label=self.model.name + '- q_p1')
+            ax.plot(sol.t, sol.y[1, :], label=self.model.name + 'q_p0')
+            ax.plot(sol.t, sol.y[2, :], label=self.model.name + 'q_p1')
 
         # Add labels, legends, and axis labels to the plot.
         if ax == plt:
@@ -74,13 +78,32 @@ class Solution:
         if ax is None:  # create a Matplotlib figure for plotting.
             fig = plt.figure()
             ax = plt
-        ax.plot(self.t_eval, self.model.dose(self.t_eval), label=self.model.name + 'dosing')
+        ax.plot(self.t_eval, self.model.dose(self.t_eval),
+                label=self.model.name + f'dosing (total = {self.total_dose}ng)')
 
         # Add labels, legends, and axis labels to the plot.
         if ax == plt:
             ax.legend()
             ax.ylabel('drug mass [ng]')
             ax.xlabel('time [h]')
+            plt.show()
+    
+    def plot(self, axs=None):
+        if axs is None:
+            fig, axs = plt.subplots(2, 1, sharex=True)
+            show = True
+        else:
+            show = False
+
+        self.plotResults(axs[0])
+        self.plotDose(axs[1])
+
+        for ax in axs:
+            ax.legend(loc='upper left')
+            ax.set_ylabel('drug mass [ng]')
+        axs[1].set_xlabel('time [h]')
+
+        if show:
             plt.show()
 
 
